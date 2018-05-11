@@ -4,7 +4,7 @@ package com.example.kevca.labproducto_front.Class;
  * Created by kevca on 5/10/2018.
  */
 
-public class Producto {
+public class Producto implements Jsonable {
 
     private int codigo;
     private String nombre;

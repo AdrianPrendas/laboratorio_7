@@ -102,7 +102,7 @@ public class c_producto_Fragment extends Fragment {
         c_producto_nombre= (EditText) vista.findViewById(R.id.c_producto_nombre);
         c_producto_precio= (EditText) vista.findViewById(R.id.c_producto_precio);
         c_producto_importado= (EditText) vista.findViewById(R.id.c_producto_importado);
-        c_producto_tipo= (EditText) vista.findViewById(R.id.c_c_producto_tipo);
+        //c_producto_tipo= (EditText) vista.findViewById(R.id.c_c_producto_tipo);
         c_producto_btnGuardar = (Button) vista.findViewById(R.id.c_producto_btnGuardar);
         if (codigoProducto==0){
             title_c_producto.setText("Crear Nuevo Producto");
