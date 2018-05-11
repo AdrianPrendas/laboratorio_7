@@ -4,15 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kevca.labproducto_front.Class.Producto;
+import com.example.kevca.labproducto_front.Fragments.ProductoFragment;
 import com.example.kevca.labproducto_front.R;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,13 +40,11 @@ public class c_producto_Fragment extends Fragment {
 
     private int codigoProducto;
     private EditText c_producto_nombre;
-    private EditText c_producto_cedula;
-    private EditText c_producto_telefono;
-    private EditText c_producto_mail;
-    private EditText c_producto_fecha;
-    private EditText c_producto_carrera;
-    private EditText c_producto_contrasena;
-    private TextView c_producto_titulo;
+    private EditText c_producto_codigo;
+    private EditText c_producto_precio;
+    private EditText c_producto_importado;
+    private EditText c_producto_tipo;
+    private TextView title_c_producto;
     private Button c_producto_btnGuardar;
     //private static AlumnoBL alumnobl = AlumnoBL.Companion.getInstance();
     private Producto producto;
@@ -83,6 +87,7 @@ public class c_producto_Fragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            codigoProducto = getArguments().getInt("someInt", 0);
         }
     }
 
@@ -90,7 +95,59 @@ public class c_producto_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_c_producto_, container, false);
+        View vista = inflater.inflate(R.layout.fragment_c_producto_, container, false);
+
+        title_c_producto= (TextView) vista.findViewById(R.id.title_c_producto);
+        c_producto_codigo= (EditText) vista.findViewById(R.id.c_producto_codigo);
+        c_producto_nombre= (EditText) vista.findViewById(R.id.c_producto_nombre);
+        c_producto_precio= (EditText) vista.findViewById(R.id.c_producto_precio);
+        c_producto_importado= (EditText) vista.findViewById(R.id.c_producto_importado);
+        c_producto_tipo= (EditText) vista.findViewById(R.id.c_c_producto_tipo);
+        c_producto_btnGuardar = (Button) vista.findViewById(R.id.c_producto_btnGuardar);
+        if (codigoProducto==0){
+            title_c_producto.setText("Crear Nuevo Producto");
+        }else{
+            //producto =alumnobl.read(codigoProducto);
+            if (producto!=null){
+                updateProducto(producto);
+            }else {
+                Toast.makeText(getContext(),"No se encuentra el Alumno a modificar",Toast.LENGTH_LONG).show();
+                FragmentManager manager=getFragmentManager();
+                ////manager.beginTransaction().replace(R.id.content_frame,new ProductoFragment()).commit();
+            }
+
+        }
+        c_producto_btnGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(camposLlenos()){
+                    producto=new Producto(Integer.parseInt(c_producto_codigo.getText().toString()),c_producto_nombre.getText().toString(),Float.valueOf(c_producto_precio.getText().toString()),Boolean.parseBoolean(c_producto_importado.getText().toString()),c_producto_tipo.getText().toString());
+                    String salidaTOAST="";
+                    Producto productoReturn=null;
+                    //Se crea o modifica
+                    if(codigoProducto==0){
+                        salidaTOAST="Se agrega el Producto: '";
+                        ////productoReturn= alumnobl.create(producto);
+                    }
+                    else {
+                        salidaTOAST="Se modifica el producto: '";
+                        ////productoReturn= alumnobl.update(producto);
+                    }
+                    if(productoReturn!=null){
+                        Toast.makeText(getContext(),salidaTOAST +productoReturn.getNombre()+"' Codigo: "+productoReturn.getCodigo(),Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(),"No se agrega el Producto",Toast.LENGTH_SHORT).show();
+                    }
+                    FragmentManager manager=getFragmentManager();
+                    ////manager.beginTransaction().replace(R.id.content_frame,new ProductoFragment()).addToBackStack("bcaf").commit();
+                }
+                else Toast.makeText(getContext(),"Inserte informacion en todos los campos",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        return vista;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -131,4 +188,22 @@ public class c_producto_Fragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-}
+
+    private void updateProducto(Producto alumno){
+        title_c_producto.setText("Modificar Producto");
+        c_producto_codigo.setText(String.valueOf(alumno.getCodigo()));
+        c_producto_codigo.setEnabled(false);
+        c_producto_nombre.setText(alumno.getNombre());
+        c_producto_precio.setText(String.valueOf(alumno.getPrecio()));
+        c_producto_importado.setText(String.valueOf(alumno.getImportado()));
+        c_producto_tipo.setText(String.valueOf(alumno.getTipo()));
+
+        c_producto_btnGuardar.setText("Modificar");
+    }
+    private boolean camposLlenos(){
+        if(c_producto_codigo.getText().toString().trim().equals("") || c_producto_nombre.getText().toString().trim().equals("") || c_producto_precio.getText().toString().trim().equals("") || c_producto_importado.getText().toString().trim().equals("") || c_producto_tipo.getText().toString().trim().equals("")){
+        return false;
+        }
+        return true;
+        }
+        }

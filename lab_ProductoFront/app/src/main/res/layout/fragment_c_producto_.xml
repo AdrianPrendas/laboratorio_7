@@ -79,7 +79,7 @@
                 android:text="Tipo:" />
 
             <EditText
-                android:id="@+id/c_c_producto_tipo"
+                android:id="@+id/c_producto_tipo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
