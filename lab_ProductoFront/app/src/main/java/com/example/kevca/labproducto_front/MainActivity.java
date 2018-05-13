@@ -2,6 +2,8 @@ package com.example.kevca.labproducto_front;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -15,11 +17,26 @@ public class MainActivity extends AppCompatActivity implements ProductoFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ProductoFragment productoFragment = (ProductoFragment)
+                getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        //above part is to determine which fragment is in your frame_container
+        setFragment(new ProductoFragment());
     }
     //Fragment miFragment = null;
     //boolean fragmentSeleccionado=false;
     //fragmentSeleccionado=true;
     //getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,miFragment).addToBackStack("volver").commit();
+
+
+
+    protected void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+        fragmentTransaction.replace(android.R.id.content, fragment);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

@@ -27,6 +27,8 @@ import com.example.kevca.labproducto_front.R;
 
 import java.util.ArrayList;
 
+import Create.c_producto_Fragment;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -99,7 +101,7 @@ public class ProductoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager=getFragmentManager();
-                //manager.beginTransaction().replace(R.id.content_frame, c_AlumnoFragment.newInstance(0)).addToBackStack("back").commit();
+                manager.beginTransaction().replace(android.R.id.content, c_producto_Fragment.newInstance(0)).addToBackStack("back").commit();
             }
         });
         //Swipe
@@ -113,7 +115,7 @@ public class ProductoFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if (direction==ItemTouchHelper.LEFT){
                     FragmentManager manager=getFragmentManager();
-                    //manager.beginTransaction().replace(R.id.content_frame,c_AlumnoFragment.newInstance((int) viewHolder.itemView.getTag())).addToBackStack("backaf").commit();
+                    manager.beginTransaction().replace(android.R.id.content,c_producto_Fragment.newInstance((int) viewHolder.itemView.getTag())).addToBackStack("backaf").commit();
 
                 }else {
                     //Producto producto= productobl.delete((int) viewHolder.itemView.getTag());
