@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ProductoBL implements BaseBL<String,Producto>{
     Gson gson = null;
-    ProductoBL(){
+    public ProductoBL(){
         RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
                     .registerSubtype(Tipo.class, "Tipo")
                     .registerSubtype(Producto.class, "Producto");

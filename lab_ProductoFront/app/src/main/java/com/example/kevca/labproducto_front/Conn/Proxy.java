@@ -14,7 +14,7 @@ import java.net.URLConnection;
  */
 public class Proxy {
 
-    public static String server = "http://e1a08d1a.ngrok.io/Web/Application";
+    public static String server = "http://1c7c211a.ngrok.io/Web/Application";
 
     public static String request(String mem) {
         StringBuilder str = new StringBuilder();

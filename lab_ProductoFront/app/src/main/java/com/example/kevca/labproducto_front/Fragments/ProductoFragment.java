@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.kevca.labproducto_front.Adapter.AdapterProducto;
 import com.example.kevca.labproducto_front.Class.Producto;
+import com.example.kevca.labproducto_front.Conn.BaseBL;
+import com.example.kevca.labproducto_front.Conn.ProductoBL;
 import com.example.kevca.labproducto_front.R;
 
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class ProductoFragment extends Fragment {
     EditText search_producto;
     AdapterProducto adapter;
     Button btnCrear;
+    ProductoBL productoBL = new ProductoBL();
 
     private OnFragmentInteractionListener mListener;
 
@@ -212,7 +215,8 @@ public class ProductoFragment extends Fragment {
     }
 
     private void llenarLista() {
-        //listaProductos = new ArrayList(alumnobl.readAll());
+        ArrayList<Producto> p= new ArrayList(productoBL.readAll());
+        listaProductos = p;
     }
 
 
