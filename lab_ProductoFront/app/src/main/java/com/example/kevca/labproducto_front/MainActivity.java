@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.os.StrictMode;
 import com.example.kevca.labproducto_front.Fragments.ProductoFragment;
 
 import Create.c_producto_Fragment;
@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity implements ProductoFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         ProductoFragment productoFragment = (ProductoFragment)
                 getSupportFragmentManager().findFragmentById(R.id.frame_container);
         //above part is to determine which fragment is in your frame_container
