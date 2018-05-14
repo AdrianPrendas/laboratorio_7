@@ -121,11 +121,14 @@ public class ProductoFragment extends Fragment {
                     manager.beginTransaction().replace(android.R.id.content,c_producto_Fragment.newInstance((int) viewHolder.itemView.getTag())).addToBackStack("backaf").commit();
 
                 }else {
-                    //Producto producto= productobl.delete((int) viewHolder.itemView.getTag());
+                    boolean producto= productoBL.delete((String.valueOf(viewHolder.itemView.getTag())));
                     llenarLista();
                     adapter = new AdapterProducto(listaProductos);
                     recycler_producto.setAdapter(adapter);
-                    //Toast.makeText(getContext(),"Eliminado "+producto.getNombre(),Toast.LENGTH_SHORT).show();
+                    if(producto){
+                        Toast.makeText(getContext(),"Eliminado ",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
             }

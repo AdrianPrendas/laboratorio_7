@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kevca.labproducto_front.Class.Producto;
+import com.example.kevca.labproducto_front.Conn.ProductoBL;
 import com.example.kevca.labproducto_front.Fragments.ProductoFragment;
 import com.example.kevca.labproducto_front.R;
 
@@ -46,7 +47,7 @@ public class c_producto_Fragment extends Fragment {
     private EditText c_producto_tipo;
     private TextView title_c_producto;
     private Button c_producto_btnGuardar;
-    //private static AlumnoBL alumnobl = AlumnoBL.Companion.getInstance();
+    ProductoBL productoBL = new ProductoBL();
     private Producto producto;
 
     private OnFragmentInteractionListener mListener;
@@ -107,13 +108,13 @@ public class c_producto_Fragment extends Fragment {
         if (codigoProducto==0){
             title_c_producto.setText("Crear Nuevo Producto");
         }else{
-            //producto =alumnobl.read(codigoProducto);
+            producto = (Producto) productoBL.read(String.valueOf(codigoProducto));
             if (producto!=null){
                 updateProducto(producto);
             }else {
-                Toast.makeText(getContext(),"No se encuentra el Alumno a modificar",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"No se encuentra el Producto a modificar",Toast.LENGTH_LONG).show();
                 FragmentManager manager=getFragmentManager();
-                ////manager.beginTransaction().replace(R.id.content_frame,new ProductoFragment()).commit();
+                manager.beginTransaction().replace(android.R.id.content,new ProductoFragment()).commit();
             }
 
         }
@@ -123,24 +124,24 @@ public class c_producto_Fragment extends Fragment {
                 if(camposLlenos()){
                     producto=new Producto(Integer.parseInt(c_producto_codigo.getText().toString()),c_producto_nombre.getText().toString(),Float.valueOf(c_producto_precio.getText().toString()),Boolean.parseBoolean(c_producto_importado.getText().toString()),c_producto_tipo.getText().toString());
                     String salidaTOAST="";
-                    Producto productoReturn=null;
+                    Boolean productoReturn=null;
                     //Se crea o modifica
                     if(codigoProducto==0){
                         salidaTOAST="Se agrega el Producto: '";
-                        ////productoReturn= alumnobl.create(producto);
+                        productoReturn= productoBL.create(producto);
                     }
                     else {
                         salidaTOAST="Se modifica el producto: '";
-                        ////productoReturn= alumnobl.update(producto);
+                        productoReturn=productoBL.update(producto);
                     }
-                    if(productoReturn!=null){
-                        Toast.makeText(getContext(),salidaTOAST +productoReturn.getNombre()+"' Codigo: "+productoReturn.getCodigo(),Toast.LENGTH_LONG).show();
+                    if(productoReturn!=false){
+                        Toast.makeText(getContext(),salidaTOAST +producto.getNombre()+"' Codigo: "+producto.getCodigo(),Toast.LENGTH_LONG).show();
                     }
                     else{
                         Toast.makeText(getContext(),"No se agrega el Producto",Toast.LENGTH_SHORT).show();
                     }
                     FragmentManager manager=getFragmentManager();
-                    ////manager.beginTransaction().replace(R.id.content_frame,new ProductoFragment()).addToBackStack("bcaf").commit();
+                    manager.beginTransaction().replace(android.R.id.content,new ProductoFragment()).addToBackStack("bcaf").commit();
                 }
                 else Toast.makeText(getContext(),"Inserte informacion en todos los campos",Toast.LENGTH_SHORT).show();
 
