@@ -59,7 +59,7 @@ public class ProductoBL implements BaseBL<String,Producto>{
     }
 
     public Producto read(Integer key) {
-        String json = Proxy.request("action=findById&nid="+key.toString());
+        String json = Proxy.request("action=findById&id="+key.toString());
         Producto p = gson.fromJson(json, Producto.class);
         return p;
     }

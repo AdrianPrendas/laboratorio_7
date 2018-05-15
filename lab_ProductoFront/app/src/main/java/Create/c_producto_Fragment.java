@@ -107,7 +107,7 @@ public class c_producto_Fragment extends Fragment {
         if (codigoProducto==0){
             title_c_producto.setText("Crear Nuevo Producto");
         }else{
-            producto = (Producto) ProductoBL.getInstance().read(String.valueOf(codigoProducto));
+            producto = (Producto) ProductoBL.getInstance().read(codigoProducto);
             if (producto!=null){
                 updateProducto(producto);
             }else {
