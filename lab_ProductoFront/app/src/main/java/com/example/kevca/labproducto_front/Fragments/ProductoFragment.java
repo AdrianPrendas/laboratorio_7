@@ -54,7 +54,6 @@ public class ProductoFragment extends Fragment {
     EditText search_producto;
     AdapterProducto adapter;
     Button btnCrear;
-    ProductoBL productoBL = new ProductoBL();
 
     private OnFragmentInteractionListener mListener;
 
@@ -121,7 +120,7 @@ public class ProductoFragment extends Fragment {
                     manager.beginTransaction().replace(android.R.id.content,c_producto_Fragment.newInstance((int) viewHolder.itemView.getTag())).addToBackStack("backaf").commit();
 
                 }else {
-                    boolean producto= productoBL.delete((String.valueOf(viewHolder.itemView.getTag())));
+                    boolean producto = ProductoBL.getInstance().delete((String.valueOf(viewHolder.itemView.getTag())));
                     llenarLista();
                     adapter = new AdapterProducto(listaProductos);
                     recycler_producto.setAdapter(adapter);
@@ -218,7 +217,7 @@ public class ProductoFragment extends Fragment {
     }
 
     private void llenarLista() {
-        ArrayList<Producto> p= new ArrayList(productoBL.readAll());
+        ArrayList<Producto> p= new ArrayList(ProductoBL.getInstance().readAll());
         listaProductos = p;
     }
 

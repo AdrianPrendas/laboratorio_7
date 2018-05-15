@@ -18,7 +18,14 @@ import java.util.List;
  */
 public class ProductoBL implements BaseBL<String,Producto>{
     Gson gson = null;
-    public ProductoBL(){
+    private static ProductoBL instance;
+    public static ProductoBL getInstance(){
+        if(instance == null){
+            instance = new ProductoBL();
+        }
+        return instance;
+    }
+    ProductoBL(){
         RuntimeTypeAdapterFactory<Jsonable> rta = RuntimeTypeAdapterFactory.of(Jsonable.class, "_class")
                     .registerSubtype(Tipo.class, "Tipo")
                     .registerSubtype(Producto.class, "Producto");
@@ -49,6 +56,12 @@ public class ProductoBL implements BaseBL<String,Producto>{
             lp.add(p);
         }
         return lp;
+    }
+
+    public Producto read(Integer key) {
+        String json = Proxy.request("action=findById&nid="+key.toString());
+        Producto p = gson.fromJson(json, Producto.class);
+        return p;
     }
 
     @Override

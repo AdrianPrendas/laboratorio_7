@@ -47,7 +47,6 @@ public class c_producto_Fragment extends Fragment {
     private EditText c_producto_tipo;
     private TextView title_c_producto;
     private Button c_producto_btnGuardar;
-    ProductoBL productoBL = new ProductoBL();
     private Producto producto;
 
     private OnFragmentInteractionListener mListener;
@@ -108,7 +107,7 @@ public class c_producto_Fragment extends Fragment {
         if (codigoProducto==0){
             title_c_producto.setText("Crear Nuevo Producto");
         }else{
-            producto = (Producto) productoBL.read(String.valueOf(codigoProducto));
+            producto = (Producto) ProductoBL.getInstance().read(String.valueOf(codigoProducto));
             if (producto!=null){
                 updateProducto(producto);
             }else {
@@ -128,11 +127,11 @@ public class c_producto_Fragment extends Fragment {
                     //Se crea o modifica
                     if(codigoProducto==0){
                         salidaTOAST="Se agrega el Producto: '";
-                        productoReturn= productoBL.create(producto);
+                        productoReturn= ProductoBL.getInstance().create(producto);
                     }
                     else {
                         salidaTOAST="Se modifica el producto: '";
-                        productoReturn=productoBL.update(producto);
+                        productoReturn=ProductoBL.getInstance().update(producto);
                     }
                     if(productoReturn!=false){
                         Toast.makeText(getContext(),salidaTOAST +producto.getNombre()+"' Codigo: "+producto.getCodigo(),Toast.LENGTH_LONG).show();
