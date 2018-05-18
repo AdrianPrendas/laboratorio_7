@@ -61,28 +61,22 @@
                 android:ems="10"
                 android:inputType="number" />
 
-            <TextView
+            <CheckBox
+                android:id="@+id/importado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Importado:" />
-
-            <EditText
-                android:id="@+id/c_producto_importado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:text="Importado" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tipo:" />
 
-            <EditText
-                android:id="@+id/c_producto_tipo"
+            <Spinner
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text" />
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/c_producto_btnGuardar"
                 android:layout_width="wrap_content"

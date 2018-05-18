@@ -8,8 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +46,11 @@ public class c_producto_Fragment extends Fragment {
     private EditText c_producto_nombre;
     private EditText c_producto_codigo;
     private EditText c_producto_precio;
-    private EditText c_producto_importado;
-    private EditText c_producto_tipo;
     private TextView title_c_producto;
     private Button c_producto_btnGuardar;
     private Producto producto;
+    private Spinner spinner;
+    private CheckBox checkBox;
 
     private OnFragmentInteractionListener mListener;
 
@@ -72,10 +75,10 @@ public class c_producto_Fragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public static c_producto_Fragment newInstance(int someInt) {
+    public static c_producto_Fragment newInstance(int codigODelProducto) {
         c_producto_Fragment c_producto_Fragment = new c_producto_Fragment();
         Bundle args = new Bundle();
-        args.putInt("someInt", someInt);
+        args.putInt("codigoProducto", codigODelProducto);
         c_producto_Fragment.setArguments(args);
 
         return c_producto_Fragment;
@@ -87,7 +90,7 @@ public class c_producto_Fragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            codigoProducto = getArguments().getInt("someInt", 0);
+            codigoProducto = getArguments().getInt("codigoProducto", 0);
         }
     }
 
@@ -96,14 +99,17 @@ public class c_producto_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_c_producto_, container, false);
-
         title_c_producto= (TextView) vista.findViewById(R.id.title_c_producto);
         c_producto_codigo= (EditText) vista.findViewById(R.id.c_producto_codigo);
         c_producto_nombre= (EditText) vista.findViewById(R.id.c_producto_nombre);
         c_producto_precio= (EditText) vista.findViewById(R.id.c_producto_precio);
-        c_producto_importado= (EditText) vista.findViewById(R.id.c_producto_importado);
-        c_producto_tipo= (EditText) vista.findViewById(R.id.c_producto_tipo);
+        checkBox = (CheckBox) vista.findViewById(R.id.importado);
         c_producto_btnGuardar = (Button) vista.findViewById(R.id.c_producto_btnGuardar);
+        spinner = (Spinner) vista.findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapterArray = ArrayAdapter.createFromResource(getContext(),R.array.tipos,android.R.layout.simple_spinner_item);
+        adapterArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapterArray);
+
         if (codigoProducto==0){
             title_c_producto.setText("Crear Nuevo Producto");
         }else{
@@ -121,9 +127,9 @@ public class c_producto_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(camposLlenos()){
-                    producto=new Producto(Integer.parseInt(c_producto_codigo.getText().toString()),c_producto_nombre.getText().toString(),Float.valueOf(c_producto_precio.getText().toString()),Boolean.parseBoolean(c_producto_importado.getText().toString()),c_producto_tipo.getText().toString());
+                    producto=new Producto(Integer.parseInt(c_producto_codigo.getText().toString()),c_producto_nombre.getText().toString(),Float.valueOf(c_producto_precio.getText().toString()),checkBox.hasSelection(),spinner.getSelectedItem().toString());
                     String salidaTOAST="";
-                    Boolean productoReturn=null;
+                    Boolean productoReturn=false;
                     //Se crea o modifica
                     if(codigoProducto==0){
                         salidaTOAST="Se agrega el Producto: '";
@@ -189,19 +195,19 @@ public class c_producto_Fragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void updateProducto(Producto alumno){
+    private void updateProducto(Producto producto){
         title_c_producto.setText("Modificar Producto");
-        c_producto_codigo.setText(String.valueOf(alumno.getCodigo()));
+        c_producto_codigo.setText(String.valueOf(producto.getCodigo()));
         c_producto_codigo.setEnabled(false);
-        c_producto_nombre.setText(alumno.getNombre());
-        c_producto_precio.setText(String.valueOf(alumno.getPrecio()));
-        c_producto_importado.setText(String.valueOf(alumno.getImportado()));
-        c_producto_tipo.setText(String.valueOf(alumno.getTipo()));
+        c_producto_nombre.setText(producto.getNombre());
+        c_producto_precio.setText(String.valueOf(producto.getPrecio()));
+        checkBox.setChecked(producto.getImportado());
+        spinner.setPrompt(String.valueOf(producto.getTipo()));
 
         c_producto_btnGuardar.setText("Modificar");
     }
     private boolean camposLlenos(){
-        if(c_producto_codigo.getText().toString().trim().equals("") || c_producto_nombre.getText().toString().trim().equals("") || c_producto_precio.getText().toString().trim().equals("") || c_producto_importado.getText().toString().trim().equals("") || c_producto_tipo.getText().toString().trim().equals("")){
+        if(c_producto_codigo.getText().toString().trim().equals("") || c_producto_nombre.getText().toString().trim().equals("") || c_producto_precio.getText().toString().trim().equals("")){
         return false;
         }
         return true;
