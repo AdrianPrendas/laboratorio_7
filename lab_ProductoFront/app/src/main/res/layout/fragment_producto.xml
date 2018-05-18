@@ -16,7 +16,8 @@
         android:paddingTop="10dp"
         android:text="Productos"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <Button

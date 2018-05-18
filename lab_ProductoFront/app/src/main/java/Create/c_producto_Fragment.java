@@ -202,8 +202,7 @@ public class c_producto_Fragment extends Fragment {
         c_producto_nombre.setText(producto.getNombre());
         c_producto_precio.setText(String.valueOf(producto.getPrecio()));
         checkBox.setChecked(producto.getImportado());
-        spinner.setPrompt(String.valueOf(producto.getTipo()));
-
+        spinner.setSelection(getIndex(spinner, String.valueOf(producto.getTipo())));
         c_producto_btnGuardar.setText("Modificar");
     }
     private boolean camposLlenos(){
@@ -212,4 +211,15 @@ public class c_producto_Fragment extends Fragment {
         }
         return true;
         }
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(myString)){
+                index = i;
+            }
         }
+        return index;
+    }
+}

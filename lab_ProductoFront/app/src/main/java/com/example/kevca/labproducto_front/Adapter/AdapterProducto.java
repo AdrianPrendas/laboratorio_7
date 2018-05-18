@@ -35,7 +35,11 @@ public class AdapterProducto extends RecyclerView.Adapter<AdapterProducto.Produc
         holder.tvNombreA.setText(listaProductos.get(position).getNombre());
         holder.tvCodigoA.setText(String.valueOf(listaProductos.get(position).getCodigo()));
         holder.tvPrecioA.setText(String.valueOf(listaProductos.get(position).getPrecio()));
-        holder.tvImportado.setText(String.valueOf(listaProductos.get(position).getImportado()));
+        if(listaProductos.get(position).getImportado()){
+            holder.tvImportado.setText("Si");
+        }else{
+            holder.tvImportado.setText("No");
+        }
         holder.tvTipoA.setText(listaProductos.get(position).getTipo());
         holder.tvPorcentajeA.setText(String.valueOf(listaProductos.get(position).getPorcentaje()));
         holder.tvImpuestoA.setText(String.valueOf(listaProductos.get(position).getImpuesto()));
