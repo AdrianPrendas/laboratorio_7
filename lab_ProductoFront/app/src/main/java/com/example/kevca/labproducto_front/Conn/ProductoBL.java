@@ -37,6 +37,7 @@ public class ProductoBL implements BaseBL<String,Producto>{
     public boolean create(Producto obj) {
         String json;
         json = gson.toJson(obj);
+        json = json.replace(" ","$");
         json = Proxy.request("action=saveProduct&product="+json);
         Exception e = gson.fromJson(json, Exception.class);
         if(e.getMessage().equals("Exito"))
@@ -81,6 +82,7 @@ public class ProductoBL implements BaseBL<String,Producto>{
     public boolean update(Producto obj) {
         String json;
         json = gson.toJson(obj);
+        json = json.replace(" ","$");
         json = Proxy.request("action=update&product="+json);
         Exception e = gson.fromJson(json, Exception.class);
         if(e.getMessage().equals("Exito"))
